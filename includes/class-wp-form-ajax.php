@@ -63,9 +63,9 @@ class WP_Form_Ajax {
             return new \WP_Error( 'There was an error saving the form' );
         }
 
-        wp_send_json_success([
+        wp_send_json_success( [
             'message' => 'Form submitted successfully',
-        ]);
+        ] );
 
         return $wpdb->insert_id;
     }

@@ -5,14 +5,11 @@
 		$('#wp_custom_form form').on('submit', function (e) {
 			e.preventDefault();
 
-			// var data = $(this).serialize();
-			
 			var fname = $(this).find('input[name="fname"]').val();
 			var lname = $(this).find('input[name="lname"]').val();
 			var email = $(this).find('input[name="email"]').val();
 			var subject = $(this).find('input[name="subject"]').val();
 			var message = $(this).find('textarea[name="message"]').val();
-
 
 			$.ajax({
 				url: wp_form.ajaxurl,
@@ -27,10 +24,9 @@
 						message: message
 					},
 					nonce: wp_form.nonce,
-
 				}
 			});
 		});
-	})	
+	})
 
 })(jQuery);
