@@ -127,12 +127,18 @@ class Wp_Form {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-form-public.php';
 
         /**
-         * The class responsible for defining all actions that occur in the public-facing
+         * The class responsible for shortcode
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-form-shortcode.php';
 
+        /**
+         * The class responsible for Ajax
+         */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-form-ajax.php';
 
+        /**
+         * The class responsible for Form Installer
+         */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-form-installer.php';
 
         $this->loader = new Wp_Form_Loader();
@@ -151,7 +157,7 @@ class Wp_Form {
     }
 
     /**
-     * Register plugin Pages.
+     * Register ajax hooks.
      *
      * @access   private
      */
