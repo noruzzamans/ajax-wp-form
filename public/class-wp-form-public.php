@@ -97,6 +97,8 @@ class Wp_Form_Public {
          */
 
         wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-form-public.js', array( 'jquery' ), $this->version, false );
+        wp_enqueue_script( 'jquery-validation', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js' );
+
 
         wp_localize_script( $this->plugin_name, 'wp_form', [
             'ajaxurl' => admin_url( 'admin-ajax.php' ),

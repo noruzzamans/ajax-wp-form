@@ -9,14 +9,15 @@
 
         ?>
             <div class="wp-form-container" id="wp_custom_form">
-                <form class="wp-form" action="#" method="POST">
+                <h3>Submit your feedback</h3>
+                <form class="wp-form" id="Wp_Form" action="#" method="POST">
                     <div class="form-row">
                         <label for="fname">First Name</label>
-                        <input type="text" name="fname" id="fname">
+                        <input type="text" name="fname" id="fname" minlength="2">
                     </div>
                     <div class="form-row">
                         <label for="lname">Last Name</label>
-                        <input type="text" name="lname" id="lname">
+                        <input type="text" name="lname" id="lname" minlength="2">
                     </div>
                     <div class="form-row">
                         <label for="email">Email</label>
