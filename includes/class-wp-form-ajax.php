@@ -71,3 +71,4 @@ class WP_Form_Ajax {
     }
 
 }
+
