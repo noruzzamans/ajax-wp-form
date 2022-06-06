@@ -16,27 +16,18 @@ class WP_Form_Ajax {
         $subject = isset( $data['subject'] ) ? sanitize_text_field( $data['subject'] ) : '';
         $message = isset( $data['message'] ) ? sanitize_textarea_field( $data['message'] ) : '';
 
-        if ( empty( $data['fname'] ) ) {
-            return new \WP_Error( 'fname_error', 'First Name is required' );
-        }
-
-        if ( empty( $data['lname'] ) ) {
-            return new \WP_Error( 'lname_error', 'Last Name is required' );
-        }
-
-        if ( empty( $data['email'] ) ) {
-            return new \WP_Error( 'email_error', 'Email is required' );
-        }
-
-        if ( empty( $data['subject'] ) ) {
-            return new \WP_Error( 'subject_error', 'Subject is required' );
-        }
-
-        if ( empty( $data['message'] ) ) {
-            return new \WP_Error( 'message_error', 'Message is required' );
-        }
 
         global $wpdb;
+
+        //email validation
+        $query   = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wp_form WHERE email = %s", $email );
+        $results = $wpdb->get_results( $query );
+
+        if ( count( $results ) > 0 ) {
+            wp_send_json_error( 'Email already exits. Please entered another email', 409 );
+        }
+
+        //insert data
         $inserted = $wpdb->insert(
             "{$wpdb->prefix}wp_form",
             [
@@ -59,16 +50,14 @@ class WP_Form_Ajax {
             ]
         );
 
-        if ( ! $inserted ) {
-            return new \WP_Error( 'There was an error saving the form' );
+        //success message
+        if ( $inserted ) {
+            wp_send_json_success( [
+                'message' => 'Your message has been sent successfully.',
+            ], 200 );
         }
-
-        wp_send_json_success( [
-            'message' => 'Form submitted successfully',
-        ] );
 
         return $wpdb->insert_id;
     }
 
 }
-

@@ -4,7 +4,6 @@
 	$(document).ready(function () {
 		$('#wp_custom_form form').on('submit', function (e) {
 			e.preventDefault();
-
 			$('#Wp_Form').validate({
 				rules: {
 					fname: {
@@ -18,7 +17,7 @@
 					email: {
 						required: true,
 						email: true,
-						regex:"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"
+						regex: "[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"
 
 					},
 					subject: {
@@ -71,6 +70,19 @@
 						message: message
 					},
 					nonce: wp_form.nonce,
+				},
+				success: function (data) {
+					if (data.success) {
+						$('#result_message').html(
+							'<div>' + data.data.message + '</div>'
+						);
+						$('#wp_custom_form form').trigger('reset');
+					}
+				},
+				error: function (request) {
+					$('#result_message').html(
+						'<div>' + request.responseJSON.data + '</div>'
+					);
 				}
 			});
 		});

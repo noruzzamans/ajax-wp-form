@@ -34,10 +34,12 @@
                     <div class="form-row">
                         <input class="form_submit" type="submit" value="Send">
                     </div>
+                    <div class="form-row" id="result_message">
+                    </div>
                 </form>
             </div>
 
-    <?php
+        <?php
 
                 return ob_get_clean();
             }
