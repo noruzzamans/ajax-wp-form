@@ -82,6 +82,7 @@ class Wp_Form {
         $this->define_public_hooks();
         $this->register_shortcode();
         $this->register_ajax_hooks();
+        $this->register_admin_menu();
 
     }
 
@@ -141,6 +142,11 @@ class Wp_Form {
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-form-installer.php';
 
+        /**
+         * The class responsible for Admin Menu
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/Admin/class-wp-form-menu.php';
+
         $this->loader = new Wp_Form_Loader();
 
     }
@@ -166,6 +172,15 @@ class Wp_Form {
         $plugin_ajax = new WP_Form_Ajax();
         $this->loader->add_action( 'wp_ajax_wp_form_submit', $plugin_ajax, 'wp_form_submit' );
         $this->loader->add_action( 'wp_ajax_nopriv_wp_form_submit', $plugin_ajax, 'wp_form_submit' );
+    }
+
+    /**
+     * Register the admin menu.
+     *
+     * @access   private
+     */
+    private function register_admin_menu() {
+        new WP_Form_Menu();
     }
 
     /**
