@@ -73,18 +73,17 @@
 					nonce: wp_form.nonce,
 				},
 				success: function (data) {
-					if (data.success) {
+					if (data.success === true) {
 						$('#result_message').html(
 							'<div>' + data.data.message + '</div>'
 						);
 						$('#wp_custom_form form').trigger('reset');
+					} else if(data.success === false){
+						$('#result_message').html(
+							'<div>' + data.data.message + '</div>'
+						);
 					}
 				},
-				error: function (request) {
-					$('#result_message').html(
-						'<div class="something">' + request.responseJSON.data + '</div>'
-					);
-				}
 			});
 		});
 	})

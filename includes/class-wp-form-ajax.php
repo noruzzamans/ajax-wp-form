@@ -12,6 +12,7 @@ class WP_Form_Ajax {
             die( 'Busted!' );
         }
 
+        // sanitize user input
         $data    = $_POST['data'];
         $fname   = isset( $data['fname'] ) ? sanitize_text_field( $data['fname'] ) : '';
         $lname   = isset( $data['lname'] ) ? sanitize_text_field( $data['lname'] ) : '';
@@ -19,6 +20,7 @@ class WP_Form_Ajax {
         $subject = isset( $data['subject'] ) ? sanitize_text_field( $data['subject'] ) : '';
         $message = isset( $data['message'] ) ? sanitize_textarea_field( $data['message'] ) : '';
 
+        // validate user input
         if ( empty( $fname ) || empty( $lname ) || empty( $email ) || empty( $subject ) || empty( $message ) ) {
             $this->errors['fname'] = __( 'First name is required', 'wp-form' );
             $this->errors['lname'] = __( 'Last name is required', 'wp-form' );
@@ -26,18 +28,21 @@ class WP_Form_Ajax {
             $this->errors['subject'] = __( 'Subject is required', 'wp-form' );
             $this->errors['message'] = __( 'Message is required', 'wp-form' );
         }
+
         if( ! empty($this->errors) ) {
             wp_send_json_error( $this->errors );
         }
 
         global $wpdb;
 
-        //email validation
+        //unique email validation
         $query   = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wp_form WHERE email = %s", $email );
         $results = $wpdb->get_results( $query );
 
         if ( count( $results ) > 0 ) {
-            wp_send_json_error( 'Email already exits. Please entered another email', 409 );
+            wp_send_json_error( [
+                'message' => __('Email already exits. Please entered another email', 'wp-form'),
+            ]);
         }
 
         //insert data
@@ -66,7 +71,7 @@ class WP_Form_Ajax {
 //success message
         if ( $inserted ) {
             wp_send_json_success( [
-                'message' => 'Your message has been sent successfully.',
+                'message' => __('Your message has been sent successfully.', 'wp-form'),
             ], 200 );
         }
 
