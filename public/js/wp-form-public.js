@@ -44,7 +44,6 @@
 				message: {
 					required: wp_form.message,
 				}
-
 			}
 
 		});
