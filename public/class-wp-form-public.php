@@ -99,12 +99,18 @@ class Wp_Form_Public {
         wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-form-public.js', array( 'jquery' ), $this->version, false );
         wp_enqueue_script( 'jquery-validation', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js' );
 
-
         wp_localize_script( $this->plugin_name, 'wp_form', [
-            'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'action'  => 'wp_form_submit',
-            'nonce'   => wp_create_nonce( 'wp_form_nonce' ),
-
+            'ajaxurl'     => admin_url( 'admin-ajax.php' ),
+            'action'      => 'wp_form_submit',
+            'nonce'       => wp_create_nonce( 'wp_form_nonce' ),
+            'fname'       => __( 'Please enter your first name', 'wp-form' ),
+            'fname_min'   => __( 'Please enter at least 2 characters', 'wp-form' ),
+            'lname'       => __( 'Please enter your last name', 'wp-form' ),
+            'lname_min'   => __( 'Please enter at least 2 characters', 'wp-form' ),
+            'email'       => __( 'Please enter your email', 'wp-form' ),
+            'email_valid' => __( 'Your email address must be in the format of name@domain.com', 'wp-form' ),
+            'subject'     => __( 'Please enter your subject', 'wp-form' ),
+            'message'     => __( 'Please enter your message', 'wp-form' ),
         ] );
 
     }

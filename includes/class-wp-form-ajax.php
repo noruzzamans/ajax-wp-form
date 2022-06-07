@@ -68,7 +68,7 @@ class WP_Form_Ajax {
             ]
         );
 
-//success message
+        //success message
         if ( $inserted ) {
             wp_send_json_success( [
                 'message' => __('Your message has been sent successfully.', 'wp-form'),

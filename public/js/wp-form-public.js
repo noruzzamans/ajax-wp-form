@@ -27,22 +27,22 @@
 			},
 			messages: {
 				fname: {
-					required: "Please enter your first name",
-					minlength: jQuery.validator.format("At least {0} characters required!")
+					required: wp_form.fname,
+					minlength: wp_form.fname_min,
 				},
 				lname: {
-					required: "Please enter your last name",
-					minlength: jQuery.validator.format("At least {0} characters required!")
+					required: wp_form.lname,
+					minlength: wp_form.lname_min,
 				},
 				email: {
-					required: "Please enter your email address",
-					email: "Your email address must be in the format of name@domain.com"
+					required: wp_form.email,
+					email: wp_form.email_valid,
 				},
 				subject: {
-					required: "Please enter your subject",
+					required: wp_form.subject,
 				},
 				message: {
-					required: "Please enter your message",
+					required: wp_form.message,
 				}
 
 			}
@@ -78,7 +78,7 @@
 							'<div>' + data.data.message + '</div>'
 						);
 						$('#wp_custom_form form').trigger('reset');
-					} else if(data.success === false){
+					} else if (data.success === false) {
 						$('#result_message').html(
 							'<div>' + data.data.message + '</div>'
 						);
