@@ -1,5 +1,4 @@
 <?php
-
 class WP_Form_Menu {
 
     public function __construct() {
@@ -8,11 +7,14 @@ class WP_Form_Menu {
 
     public function wp_form_register_menu() {
 
-        add_menu_page (
-            __('WP Form', 'wp-form'),
-            __('WP Form', 'wp-form'),
-            'manage_options',
-            'wp-form',
+        $parent_slug = 'wp-form';
+        $capability  = 'manage_options';
+
+        add_menu_page(
+            __( 'WP Form', 'wp-form' ),
+            __( 'WP Form', 'wp-form' ),
+            $capability,
+            $parent_slug,
             [$this, 'wp_form_menu_page'],
             'dashicons-feedback',
             6
@@ -20,7 +22,6 @@ class WP_Form_Menu {
     }
 
     public function wp_form_menu_page() {
-        echo '<h1>WP Form</h1>';
+        require WP_FORM_PATH . 'includes/Admin/views/view.php';
     }
-
 }

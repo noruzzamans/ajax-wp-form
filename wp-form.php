@@ -74,6 +74,7 @@ register_deactivation_hook( __FILE__, 'deactivate_wp_form' );
  */
 require WP_FORM_PATH . 'includes/class-wp-form.php';
 
+
 /**
  * Begins execution of the plugin.
  *
