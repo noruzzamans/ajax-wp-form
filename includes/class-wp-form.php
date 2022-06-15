@@ -83,7 +83,6 @@ class Wp_Form {
         $this->register_shortcode();
         $this->register_ajax_hooks();
         $this->register_admin_menu();
-        $this->register_admin_data_fetch();
 
     }
 
@@ -149,11 +148,6 @@ class Wp_Form {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/Admin/class-wp-form-menu.php';
 
         /**
-         * The class responsible for Admin Data Fetch
-         */
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/Admin/class-wp-form-data-fetch.php';
-
-        /**
          * The class responsible for Admin Data list
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/Admin/class-wp-form-data-list.php';
@@ -192,11 +186,6 @@ class Wp_Form {
      */
     private function register_admin_menu() {
         new WP_Form_Menu();
-    }
-
-    private function register_admin_data_fetch() {
-        $plugin_data = new WP_Form_Data_Fetch();
-        $this->loader->add_action( 'wp_ajax_wp_form_data_fetch', $plugin_data, 'wp_form_data_fetch' );
     }
 
     /**

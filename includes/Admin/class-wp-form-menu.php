@@ -22,6 +22,27 @@ class WP_Form_Menu {
     }
 
     public function wp_form_menu_page() {
-        require WP_FORM_PATH . 'includes/Admin/views/view.php';
+        
+        $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
+        $id    = isset( $_GET['id'] ) ? $_GET['id'] : 0;
+
+        switch ( $action ) {
+            case 'edit':
+                $data = wp_form_get_data_by_id($id);
+                $template = __DIR__ . '/views/edit.php';
+                break;
+
+            case 'view':
+                $template = __DIR__ . '/views/view.php';
+                break;
+
+            default:
+                $template = __DIR__ . '/views/list.php';
+                break;
+        }
+        
+        if( file_exists( $template ) ) {
+            include $template;
+        }
     }
 }

@@ -73,6 +73,7 @@ register_deactivation_hook( __FILE__, 'deactivate_wp_form' );
  * admin-specific hooks, and public-facing site hooks.
  */
 require WP_FORM_PATH . 'includes/class-wp-form.php';
+require WP_FORM_PATH . '/functions.php';
 
 
 /**

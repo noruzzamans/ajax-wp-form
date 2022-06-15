@@ -22,6 +22,7 @@ class WP_Form_data_list extends WP_List_Table {
     public function get_columns() {
         return [
             'cb'         => '<input type="checkbox" />',
+            'id'         => __( 'ID', 'wp-form' ),
             'fname'      => __( 'First Name', 'wp-form' ),
             'lname'      => __( 'Last Name', 'wp-form' ),
             'email'      => __( 'Email', 'wp-form' ),
@@ -47,7 +48,7 @@ class WP_Form_data_list extends WP_List_Table {
      */
     function get_sortable_columns() {
         $sortable_columns = [
-            'fname' => ['fname', true],
+            'fname'      => ['fname', true],
             'created_at' => ['created_at', true],
         ];
 
@@ -61,10 +62,26 @@ class WP_Form_data_list extends WP_List_Table {
      */
     function get_bulk_actions() {
         $actions = array(
-            'trash' => __( 'Move to Trash', 'wp-form' ),
+            'trash'  => __( 'Move to Trash', 'wp-form' ),
+            'delete' => __( 'Delete Permanently', 'wp-form' ),
         );
 
         return $actions;
+    }
+
+    public function handle_row_actions( $item, $column_name, $primary ) {
+
+        if ( $primary !== $column_name ) {
+            return '';
+        }
+
+        $action           = [];
+        $action['edit']   = '<a href="#">' . __( 'Edit', 'wp-form' ) . '</a>';
+        $action['view']   = '<a href="#">' . __( 'View', 'wp-form' ) . '</a>';
+        $action['delete'] = '<a href="#">' . __( 'Delete', 'wp-form' ) . '</a>';
+
+        return $this->row_actions( $action );
+
     }
 
     /**
@@ -77,19 +94,6 @@ class WP_Form_data_list extends WP_List_Table {
     protected function column_cb( $item ) {
         return sprintf(
             '<input type="checkbox" name="form_id[]" value="%d" />', $item->id
-        );
-    }
-
-    /**
-     * Render the "name" column
-     *
-     * @param  object $item
-     *
-     * @return string
-     */
-    public function column_name( $item ) {
-        return sprintf(
-            '<a href="%1$s"><strong>%2$s</strong></a>', admin_url( 'admin.php?page=wp-form&action=view&id' . $item->id ), $item->fname
         );
     }
 
@@ -107,11 +111,10 @@ class WP_Form_data_list extends WP_List_Table {
     }
 
     public function prepare_items() {
-        $data_fetch            = new WP_Form_Data_Fetch();
-        $columns               = $this->get_columns();
-        $hidden                = [];
-        $sortable              = $this->get_sortable_columns();
-        
+        $columns    = $this->get_columns();
+        $hidden     = [];
+        $sortable   = $this->get_sortable_columns();
+
         $this->_column_headers = [$columns, $hidden, $sortable];
 
         $per_page     = 10;
@@ -125,14 +128,24 @@ class WP_Form_data_list extends WP_List_Table {
 
         if ( isset( $_REQUEST['orderby'] ) && isset( $_REQUEST['order'] ) ) {
             $args['orderby'] = $_REQUEST['orderby'];
-            $args['order']   = $_REQUEST['order'] ;
+            $args['order']   = $_REQUEST['order'];
         }
 
-        $this->items           = $data_fetch->wp_form_data_fetch($args);
+        $this->items = wp_form_data_fetch( $args );
+
+        // pagination
         $this->set_pagination_args( [
-            'total_items' => $this->wp_form_data_count(),
+            'total_items' => wp_form_data_count(),
             'per_page'    => $per_page,
         ] );
+
+        $search = isset( $_REQUEST['s'] ) ? $_REQUEST['s'] : '';
+
+        if ( $search ) {
+            $this->items = array_filter( $this->items, function ( $item ) use ( $search ) {
+                return strpos( $item->fname, $search ) !== false || strpos( $item->lname, $search ) !== false || strpos( $item->email, $search ) !== false || strpos( $item->subject, $search ) !== false || strpos( $item->message, $search ) !== false;
+            } );
+        }
 
     }
 
