@@ -14,6 +14,7 @@ class WP_Form_Ajax {
 
         // sanitize user input
         $data    = $_POST['data'];
+        $id      = isset( $data['id'] ) ? intval( $data['id'] ) : 0;
         $fname   = isset( $data['fname'] ) ? sanitize_text_field( $data['fname'] ) : '';
         $lname   = isset( $data['lname'] ) ? sanitize_text_field( $data['lname'] ) : '';
         $email   = isset( $data['email'] ) ? sanitize_email( $data['email'] ) : '';
