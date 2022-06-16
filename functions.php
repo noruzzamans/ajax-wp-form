@@ -40,11 +40,13 @@ function wp_form_data_count() {
 //fetch single data from database by id
 function wp_form_get_data_by_id( $id ) {
     global $wpdb;
-    $id = $_GET['id'];
-    $data = $wpdb->get_row(
-        $wpdb->prepare("SELECT * FROM {$wpdb->prefix}wp_form WHERE id = %d", $id)
+    $item = $wpdb->get_row(
+        $wpdb->prepare(
+            "SELECT * FROM {$wpdb->prefix}wp_form WHERE id = %d",
+            $id
+        )
     );
-    return $data;
+    return $item;
 }
 
 // delete single data from database

@@ -22,13 +22,13 @@ class WP_Form_Menu {
     }
 
     public function wp_form_menu_page() {
-        
+
         $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
-        $id    = isset( $_GET['id'] ) ? $_GET['id'] : 0;
+        $id     = isset( $_GET['id'] ) ? $_GET['id'] : 0;
 
         switch ( $action ) {
             case 'edit':
-                $data = wp_form_get_data_by_id($id);
+                $data     = wp_form_get_data_by_id( $id );
                 $template = __DIR__ . '/views/edit.php';
                 break;
 
@@ -40,9 +40,11 @@ class WP_Form_Menu {
                 $template = __DIR__ . '/views/list.php';
                 break;
         }
-        
-        if( file_exists( $template ) ) {
+
+        if ( file_exists( $template ) ) {
             include $template;
         }
+
     }
+
 }

@@ -22,7 +22,6 @@ class WP_Form_data_list extends WP_List_Table {
     public function get_columns() {
         return [
             'cb'         => '<input type="checkbox" />',
-            'id'         => __( 'ID', 'wp-form' ),
             'fname'      => __( 'First Name', 'wp-form' ),
             'lname'      => __( 'Last Name', 'wp-form' ),
             'email'      => __( 'Email', 'wp-form' ),
@@ -69,19 +68,22 @@ class WP_Form_data_list extends WP_List_Table {
         return $actions;
     }
 
-    public function handle_row_actions( $item, $column_name, $primary ) {
+    /**
+     * Render the "name" column
+     *
+     * @param  object $item
+     *
+     * @return string
+     */
+    public function column_fname( $item ) {
+        $actions = [];
 
-        if ( $primary !== $column_name ) {
-            return '';
-        }
+        $actions['edit']   = sprintf( '<a href="%s" title="%s">%s</a>', admin_url( 'admin.php?page=wp-form&action=edit&id=' . $item->id ), $item->id, __( 'Edit', 'wp-form' ), __( 'Edit', 'wp-form' ) );
+        $actions['delete'] = sprintf( '<a href="#" class="submitdelete" data-id="%s">%s</a>', $item->id, __( 'Delete', 'wp-form' ) );
 
-        $action           = [];
-        $action['edit']   = '<a href="#">' . __( 'Edit', 'wp-form' ) . '</a>';
-        $action['view']   = '<a href="#">' . __( 'View', 'wp-form' ) . '</a>';
-        $action['delete'] = '<a href="#">' . __( 'Delete', 'wp-form' ) . '</a>';
-
-        return $this->row_actions( $action );
-
+        return sprintf(
+            '<a href="%1$s"><strong>%2$s</strong></a> %3$s', admin_url( 'admin.php?page=wp-form&action=view&id' . $item->id ), $item->fname, $this->row_actions( $actions )
+        );
     }
 
     /**
@@ -111,9 +113,9 @@ class WP_Form_data_list extends WP_List_Table {
     }
 
     public function prepare_items() {
-        $columns    = $this->get_columns();
-        $hidden     = [];
-        $sortable   = $this->get_sortable_columns();
+        $columns  = $this->get_columns();
+        $hidden   = [];
+        $sortable = $this->get_sortable_columns();
 
         $this->_column_headers = [$columns, $hidden, $sortable];
 
