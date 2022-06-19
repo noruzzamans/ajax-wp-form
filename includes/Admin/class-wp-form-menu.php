@@ -33,7 +33,13 @@ class WP_Form_Menu {
                 break;
 
             case 'view':
+                $data     = wp_form_get_data_by_id( $id );
                 $template = __DIR__ . '/views/view.php';
+                break;
+
+            case 'delete':
+                wp_form_delete_data( $id );
+                $template = __DIR__ . '/views/delete.php';
                 break;
 
             default:
@@ -44,7 +50,6 @@ class WP_Form_Menu {
         if ( file_exists( $template ) ) {
             include $template;
         }
-
     }
 
 }

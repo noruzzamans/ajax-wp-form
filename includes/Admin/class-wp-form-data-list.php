@@ -79,7 +79,8 @@ class WP_Form_data_list extends WP_List_Table {
         $actions = [];
 
         $actions['edit']   = sprintf( '<a href="%s" title="%s">%s</a>', admin_url( 'admin.php?page=wp-form&action=edit&id=' . $item->id ), $item->id, __( 'Edit', 'wp-form' ), __( 'Edit', 'wp-form' ) );
-        $actions['delete'] = sprintf( '<a href="#" class="submitdelete" data-id="%s">%s</a>', $item->id, __( 'Delete', 'wp-form' ) );
+        $actions['delete'] = sprintf( '<a href="%s" title="%s">%s</a>', admin_url( 'admin.php?page=wp-form&action=delete&id=' . $item->id ), $item->id, __( 'Delete', 'wp-form' ), __( 'Delete', 'wp-form' ) );
+        $actions['view']   = sprintf( '<a href="%s" title="%s">%s</a>', admin_url( 'admin.php?page=wp-form&action=view&id=' . $item->id ), $item->id, __( 'View', 'wp-form' ), __( 'View', 'wp-form' ) );
 
         return sprintf(
             '<a href="%1$s"><strong>%2$s</strong></a> %3$s', admin_url( 'admin.php?page=wp-form&action=view&id' . $item->id ), $item->fname, $this->row_actions( $actions )

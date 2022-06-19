@@ -58,3 +58,6 @@ function wp_form_delete_data( $id ) {
         ['%d']
     );
 }
+
+
+
