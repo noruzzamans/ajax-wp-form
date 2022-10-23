@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== WP Form ===
 Contributors: (this should be a list of wordpress.org userid's)
 Donate link: https://profiles.wordpress.org/noruzzaman/
 Tags: comments, spam
